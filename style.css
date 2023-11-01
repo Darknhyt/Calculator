@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+    background-color: black;
+    color: aliceblue;
+    font-family: 'Share Tech Mono', monospace;
+    box-sizing: border-box;
+    font-size: 8vh;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+input{
+    color: aliceblue;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8vh;
+    outline: none;
+}
+#calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+   
+}
+
+#panel {
+    background-image: linear-gradient(#000, #088, #000);
+    display: flex;
+    width: 50vw;
+    height: 25vh;
+    align-items: center;
+    justify-content: center;
+    border: 5px groove cyan;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 6px 6px rgb(0, 92, 92)
+}
+#screen{
+    margin: 18px;
+    height: 10vh;
+    width: 45vw;
+    padding-right: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: end;
+    text-wrap: nowrap;
+    align-items: center;
+    border: 5px inset cyan;
+    transition: border-color 0.2s;
+    background-color: black;
+    color: aliceblue;
+}
+#keys {
+    width: 50vw;
+    height: 65vh;
+    border: 5px groove cyan;
+    border-radius: 0 0 20px 20px;
+    background-image: linear-gradient(#000, #033, #000);
+   display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    box-shadow: 6px 6px rgb(0, 92, 92)
+}
+
+#numbers{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: end;
+    align-content: stretch;
+    justify-content: space-between;
+}
+button{
+    color: aliceblue;
+    font-size: 6vh;
+    border-radius: 20%;
+    background-color: black;
+    margin: 2vh;
+    padding: 0;
+    cursor: pointer;
+    border: 3px outset cyan;
+    box-shadow: 4px 4px rgb(0, 92, 92);
+    transition: background-color 0.4s;
+}
+button:active{
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px rgb(0, 77, 77);
+}
+button:last-child:active{
+    background-color: #0ff;
+}
+
+@media screen and (orientation: portrait) {
+    #panel {
+        width: 100%;
+        height: 22vh;
+    }
+    #screen {
+        width: 90%;
+    }
+    #keys {
+        width: 100%;
+    }
+  }
