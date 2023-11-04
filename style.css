@@ -11,6 +11,7 @@ body {
     align-content: center;
     align-items: center;
 }
+
 input{
     color: aliceblue;
     font-family: 'Share Tech Mono', monospace;
@@ -26,13 +27,13 @@ input{
     background-color: black;
     color: aliceblue;
 }
+
 #calculator {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    align-content: center;
-   
+    align-content: center;  
 }
 
 #panel {
@@ -66,6 +67,7 @@ input{
     font-size: 3.4vh;
     color: #DDD;
 }
+
 #oper{
     border-bottom: none;
     border-left: none;
@@ -77,6 +79,7 @@ input{
     font-weight: bolder;
     text-align: center;
 }
+
 span{
     margin: 0 5px;
     font-size: 2.4vw;
@@ -86,6 +89,7 @@ span{
     border: 5px inset cyan;
     background-color: black;
 }
+
 #keys {
     width: 650px;
     height: 68vh;
@@ -94,18 +98,12 @@ span{
     background-image: linear-gradient(#000, #033, #000);
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
     box-shadow: 6px 6px rgb(0, 92, 92)
 }
 
-#numbers{
-    display: flex;
-    flex-flow: row wrap;
-    align-items: end;
-    align-content: stretch;
-    justify-content: space-between;
-}
 button{
-    color: aliceblue;
+    color: #0FF;
     font-family: monospace;
     font-size: 6vh;
     border-radius: 20%;
@@ -115,14 +113,46 @@ button{
     cursor: pointer;
     border: 3px outset cyan;
     box-shadow: 4px 4px #044;
-    transition: background-color 0.4s;
+    transition: all 0.2s;
 }
+
 button:active{
     transform: translate(2px, 2px);
     box-shadow: 2px 2px #033;
 }
-button:last-child:active{
-    background-color: #0ff;
+
+#sum {
+    color: #0F0;
+    border-color: #0F0;
+}
+
+#rest {
+    color: #F40;
+    border-color: #F40;
+}
+
+#prod{
+    color: #FF0;
+    border-color: #FF0;
+}
+
+#div{
+    color: #08F;
+    border-color: #08F;
+}
+
+.num{
+    color: aliceblue;
+}
+
+#result{
+    font-size: 7vh;
+    font-weight: bolder;
+}
+
+#result:hover{
+    background-color: aquamarine;
+    color: white;
 }
 
 @media screen and (orientation: portrait) {

@@ -3,7 +3,7 @@ const disp = document.getElementById("screen");
 const prev = document.getElementById("prev");
 const oper = document.getElementById("oper");
 
-let operation = false;
+let operation = false;  //To chain operations
 const calc = {
     val1: "",
     val2: 0,
@@ -77,7 +77,7 @@ function eventControls(){
              if(getResult()){ 
                   calc.operator = "=";
                   operation = false;
-                  display();
+                 display();
               } else {
                  calError();
               }
@@ -86,20 +86,19 @@ function eventControls(){
         }})
         document.addEventListener("keydown", (e)=>{
             e.preventDefault;
-            console.log(e.key);
             switch(e.key){
-                case "Enter": button.equal.dispatchEvent(new MouseEvent("click")); break;
-                case "/": button.div.dispatchEvent(new MouseEvent("click")); break;
-                case "*": button.prod.dispatchEvent(new MouseEvent("click")); break;
-                case "-": button.rest.dispatchEvent(new MouseEvent("click")); break;
-                case "+": button.sum.dispatchEvent(new MouseEvent("click")); break;
-                case "ArrowUp": button.invert.dispatchEvent(new MouseEvent("click")); break;
-                case "ArrowDown": button.invert.dispatchEvent(new MouseEvent("click")); break;
-                case "ArrowLeft": button.simbol.dispatchEvent(new MouseEvent("click")); break;
-                case "ArrowRight": button.simbol.dispatchEvent(new MouseEvent("click")); break;
-                case "Delete": button.clear.dispatchEvent(new MouseEvent("click")); break;
-                case "Backspace": button.delete.dispatchEvent(new MouseEvent("click")); break;
-                case ".": button.point.dispatchEvent(new MouseEvent("click")); break;
+                case "Enter": eventKey(button.equal); break;
+                case "/": eventKey(button.div); break;
+                case "*": eventKey(button.prod); break;
+                case "-": eventKey(button.rest); break;
+                case "+": eventKey(button.sum); break;
+                case "ArrowUp": eventKey(button.invert); break;
+                case "ArrowDown": eventKey(button.invert); break;
+                case "ArrowLeft": eventKey(button.simbol); break;
+                case "ArrowRight": eventKey(button.simbol); break;
+                case "Delete": eventKey(button.clear); break;
+                case "Backspace": eventKey(button.delete); break;
+                case ".": eventKey(button.point); break;
             }
         });
 }
@@ -118,7 +117,7 @@ function eventNumber(){
         document.addEventListener("keydown",(e)=>{
            e.preventDefault();
            if(e.key == n.textContent){
-               n.dispatchEvent(new MouseEvent("click"));
+               eventKey(n);
            }
         })
     }
@@ -136,12 +135,19 @@ function eventOperator(){
              operation = true;
          }else{
          calc.val1 = operate();
+         oper.style.color = "#FFF";
+         setTimeout(()=> oper.style.color = "#0FF", 200);
          }
          calc.operator = o.textContent;
          calc.val2 = 0;
          display();
         });
     }
+}
+
+function eventKey(button){
+    button.classList.add('active');
+    button.dispatchEvent(new MouseEvent("click"));
 }
 
 function getResult(){
