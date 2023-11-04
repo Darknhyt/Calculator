@@ -5,7 +5,7 @@ body {
     color: aliceblue;
     font-family: 'Share Tech Mono', monospace;
     box-sizing: border-box;
-    font-size: 8vh;
+    font-size: 4vh;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -14,8 +14,17 @@ body {
 input{
     color: aliceblue;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 8vh;
+    font-size: 7vh;
     outline: none;
+    padding: 0 12px;
+    display: flex;
+    justify-content: center;
+    text-wrap: nowrap;
+    align-items: center;
+    border: 5px inset cyan;
+    transition: border-color 0.2s;
+    background-color: black;
+    color: aliceblue;
 }
 #calculator {
     display: flex;
@@ -27,38 +36,63 @@ input{
 }
 
 #panel {
-    background-image: linear-gradient(#000, #088, #000);
+    background-image: linear-gradient(#044, #000, #033);
     display: flex;
-    width: 50vw;
+    flex-flow: row wrap;
+    width: 650px;
     height: 25vh;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: flex-start;
     border: 5px groove cyan;
+    border-bottom: none;
     border-radius: 20px 20px 0 0;
     box-shadow: 6px 6px rgb(0, 92, 92)
 }
-#screen{
-    margin: 18px;
+
+#screen {
+    border-radius: 0 8px 8px 8px;
+    margin: 0 15px;
     height: 10vh;
-    width: 45vw;
-    padding-right: 10px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: end;
-    text-wrap: nowrap;
-    align-items: center;
+    width: 610px;
+}
+#prev{
+    border-bottom: none;
+    width: 400px;
+    height: 5vh;
+    margin: 0 15px;
+    margin-right: 0;
+    border-radius: 5px 0 0 0;
+    font-size: 3.4vh;
+    color: #DDD;
+}
+#oper{
+    border-bottom: none;
+    border-left: none;
+    border-radius: 0 5px 0 0;
+    width: 35px;
+    height: 5vh;
+    margin: 0;
+    font-size: 4vh;
+    font-weight: bolder;
+    text-align: center;
+}
+span{
+    margin: 0 5px;
+    font-size: 2.4vw;
+    text-align: center;
+    padding: 0;
+    color: cyan;
     border: 5px inset cyan;
-    transition: border-color 0.2s;
     background-color: black;
-    color: aliceblue;
 }
 #keys {
-    width: 50vw;
-    height: 65vh;
+    width: 650px;
+    height: 68vh;
     border: 5px groove cyan;
     border-radius: 0 0 20px 20px;
     background-image: linear-gradient(#000, #033, #000);
-   display: grid;
+    display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     box-shadow: 6px 6px rgb(0, 92, 92)
 }
@@ -72,6 +106,7 @@ input{
 }
 button{
     color: aliceblue;
+    font-family: monospace;
     font-size: 6vh;
     border-radius: 20%;
     background-color: black;
@@ -79,12 +114,12 @@ button{
     padding: 0;
     cursor: pointer;
     border: 3px outset cyan;
-    box-shadow: 4px 4px rgb(0, 92, 92);
+    box-shadow: 4px 4px #044;
     transition: background-color 0.4s;
 }
 button:active{
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px rgb(0, 77, 77);
+    box-shadow: 2px 2px #033;
 }
 button:last-child:active{
     background-color: #0ff;
@@ -97,6 +132,9 @@ button:last-child:active{
     }
     #screen {
         width: 90%;
+    }
+    #prev{
+        width: 70%;
     }
     #keys {
         width: 100%;
