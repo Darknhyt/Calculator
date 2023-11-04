@@ -9,26 +9,42 @@ const calc = {
     val2: 0,
     operator: "",
     last: 0,
-    error: "No values",
+    error: false,
 }
 
 init();
 function init(){
     display();
-    addEvents();
+    eventOperator();
+    eventNumber();
+    eventControls();
 }
 
-function addEvents(){
-    num.children[0].addEventListener("click",()=>{
+function eventControls(){
+    const button = {
+        invert: document.getElementById("ans"),
+        simbol: document.getElementById("neg"),
+        clear: document.getElementById("clear"),
+        delete: document.getElementById("del"),
+        point: document.getElementById("point"),
+        equal: document.getElementById("result"),
+        div: document.getElementById("div"),
+        prod: document.getElementById("prod"),
+        rest: document.getElementById("rest"),
+        sum: document.getElementById("sum"),
+    }
+    button.invert.addEventListener("click",(e)=>{
         calc.val1 = calc.val2;
         calc.val2 = calc.last;
         calc.last = calc.val1;
+        e.target.blur();
         if (calc.operator =="="){
             calc.operator = "⇅";
         }
         display();
     })
-    num.children[1].addEventListener("click",()=>{
+    button.simbol.addEventListener("click",(e)=>{
+        e.target.blur();
         if (!disp.value.startsWith("-")){
             if (!disp.value.startsWith("0.")){
                 disp.value = disp.value.replace(/^0+/, "");
@@ -38,17 +54,82 @@ function addEvents(){
             disp.value = disp.value.slice(1);
         }
     })
-    num.children[2].addEventListener("click",()=>{
+    button.clear.addEventListener("click",(e)=>{
+        operation = false;
+        e.target.blur();
         reset();
         display();
     })
-    num.children[3].addEventListener("click",()=>{
+    button.delete.addEventListener("click",(e)=>{
+        e.target.blur();
         disp.value = disp.value.slice(0,-1);
     })
-    for (const w of num.getElementsByClassName("operator")) {
-        w.addEventListener("click", ()=>{
-         let number = disp.value;
-         if (operation == false){
+     
+     button.point.addEventListener("click", (e)=>{
+        e.target.blur();
+        if(!disp.value.includes(".")){ 
+            disp.value = disp.value + ".";
+        }
+     })
+     button.equal.addEventListener("click", (e)=>{
+        e.target.blur();      
+        if(calc.operator != ""){
+             if(getResult()){ 
+                  calc.operator = "=";
+                  operation = false;
+                  display();
+              } else {
+                 calError();
+              }
+        }else{
+            calError("Need Operator");
+        }})
+        document.addEventListener("keydown", (e)=>{
+            e.preventDefault;
+            console.log(e.key);
+            switch(e.key){
+                case "Enter": button.equal.dispatchEvent(new MouseEvent("click")); break;
+                case "/": button.div.dispatchEvent(new MouseEvent("click")); break;
+                case "*": button.prod.dispatchEvent(new MouseEvent("click")); break;
+                case "-": button.rest.dispatchEvent(new MouseEvent("click")); break;
+                case "+": button.sum.dispatchEvent(new MouseEvent("click")); break;
+                case "ArrowUp": button.invert.dispatchEvent(new MouseEvent("click")); break;
+                case "ArrowDown": button.invert.dispatchEvent(new MouseEvent("click")); break;
+                case "ArrowLeft": button.simbol.dispatchEvent(new MouseEvent("click")); break;
+                case "ArrowRight": button.simbol.dispatchEvent(new MouseEvent("click")); break;
+                case "Delete": button.clear.dispatchEvent(new MouseEvent("click")); break;
+                case "Backspace": button.delete.dispatchEvent(new MouseEvent("click")); break;
+                case ".": button.point.dispatchEvent(new MouseEvent("click")); break;
+            }
+        });
+}
+
+function eventNumber(){
+    for (const n of num.getElementsByClassName("num")){
+        n.addEventListener("click",(e)=>{
+            e.target.blur();
+            if (!disp.value.startsWith("0.")){
+                disp.value = disp.value.replace(/^0+/, "");
+            }
+            disp.value += n.textContent;
+            calc.val2 = disp.value;
+            calc.error = false;
+        })
+        document.addEventListener("keydown",(e)=>{
+           e.preventDefault();
+           if(e.key == n.textContent){
+               n.dispatchEvent(new MouseEvent("click"));
+           }
+        })
+    }
+}
+
+function eventOperator(){
+    for (const o of num.getElementsByClassName("operator")) {
+        o.addEventListener("click", (e)=>{
+        let number = disp.value;
+        e.target.blur();
+        if (operation == false){
              calc.val1 = number;
              calc.last = number;
              calc.error = false;
@@ -56,57 +137,30 @@ function addEvents(){
          }else{
          calc.val1 = operate();
          }
-         calc.operator = w.textContent;
+         calc.operator = o.textContent;
          calc.val2 = 0;
          display();
-        })
-     }
-     disp.addEventListener("input",()=>{    
-         if (!disp.value.startsWith("0.")){
-             disp.value = disp.value.replace(/^0+/, "");
-         }
-     })
-     for (const n of num.getElementsByClassName("num")){
-         n.addEventListener("click",()=>{
-             if (!disp.value.startsWith("0.")){
-                 disp.value = disp.value.replace(/^0+/, "");
-             }
-             disp.value += n.textContent;
-             calc.val2 = disp.value;
-             calc.error = false;
-         })
-     }
-     document.getElementById("result").addEventListener("click", ()=>{        
-         if(calc.operator != "=" && getResult()){ 
-             calc.operator = "=";
-             operation = false;
-             display();
-         }  
-     })
-    document.getElementById("point").addEventListener("click", ()=>{
-        if(!disp.value.includes(".")){ 
-            disp.value = disp.value + ".";
-        }
-    })
+        });
+    }
 }
 
 function getResult(){
     try {
-        let r = operate();
+        let result = operate();
         if(!calc.error){
             calc.val1 = calc.val1 + calc.operator + calc.val2;
             calc.last = calc.val2;
-            calc.val2 = r;
+            calc.val2 = result;
             disp.style.borderColor = "#FFF";
             setTimeout(()=> disp.style.borderColor = "#0FF", 200);
             return true;
         }else{
             calError(calc.error);
-            return false
         }
     } catch (error) { 
+        calError();
         console.log(error);
-        calError("ERROR");
+        return false
     } 
 }
 
@@ -147,13 +201,13 @@ function calDiv(){
 function calError(msj = "ERROR"){
     oper.textContent = "!";
     prev.value = msj;
+    disp.style.borderColor = "#E44";
     oper.style.color = "#E00"
     prev.style.color = "#E00";
-    disp.style.borderColor = "#E44";
     setTimeout(()=> {
         disp.style.borderColor = "#0FF";
         oper.style.color = "#0FF"
-        prev.style.color = "#CCC";
+        prev.style.color = "#DDD";
         display();
     }, 2000);
 }
@@ -168,7 +222,6 @@ function reset(){
     calc.val1 = "";
     calc.val2 = 0;
     calc.operator = "";
-    point = false;
     last = 0;
     error = false;
     display();
